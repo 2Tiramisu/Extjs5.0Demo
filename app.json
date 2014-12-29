@@ -137,6 +137,8 @@
         {
             "path": "bootstrap.css",
             "bootstrap": true
+        }, {
+            "path": "resources/css.css"
         }
     ],
 
@@ -305,4 +307,5 @@
      * Normally you should never change this value.
      */
     "id": "acb806c3-2327-4341-9a2c-e639c3881156"
+
 }
