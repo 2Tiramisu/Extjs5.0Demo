@@ -40,8 +40,9 @@
      *      ]
      */
     "requires": [
+        "ext-locale"
     ],
-
+    "locale": "zh_CN",
     /**
      * Sass configuration properties.
      */
