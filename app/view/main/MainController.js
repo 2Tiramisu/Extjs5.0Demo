@@ -9,7 +9,8 @@ Ext.define('MyApp.view.main.MainController', {
     extend: 'Ext.app.ViewController',
 
     requires: [
-        'Ext.window.MessageBox'
+        'Ext.window.MessageBox',
+        'MyApp.store.main.Navigation'
     ],
 
     alias: 'controller.main',
@@ -20,7 +21,9 @@ Ext.define('MyApp.view.main.MainController', {
 
     onConfirm: function (choice) {
         if (choice === 'yes') {
-            //
+           this.getView().getViewModel().set('navigationTitle','修改了')
+        }else if (choice === 'no') {
+            this.getView().getViewModel().set('navigationTitle','导航栏')
         }
     }
 });

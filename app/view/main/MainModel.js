@@ -6,9 +6,15 @@ Ext.define('MyApp.view.main.MainModel', {
 
     alias: 'viewmodel.main',
 
-    data: {
-        name: 'Extjs5.0'//我们的app标题
-    }
+    requires:['MyApp.store.main.Navigation'],//引入必要文件
 
-    //TODO - add data, formulas and/or methods to support your view
+    data: {
+        navigationTitle: '导航栏'//导航栏标题
+    },
+
+    stores:{
+        navigationStore:{
+            type:'navigation'//导航栏treestore
+        }
+    }
 });

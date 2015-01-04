@@ -10,7 +10,8 @@ Ext.define('MyApp.view.main.Main', {
     requires: [
         'MyApp.view.main.MainController',
         'MyApp.view.main.MainModel',
-        'MyApp.view.main.Header'//引入Header
+        'MyApp.view.main.Header',//引入Header
+        'MyApp.view.main.Navigation'//引入导航栏
     ],
 
     xtype: 'app-main',
@@ -29,18 +30,8 @@ Ext.define('MyApp.view.main.Main', {
             region: 'north',
             xtype: 'app-header'//使用Header
         }, {
-            xtype: 'panel',
-            bind: {
-                title: '{name}'
-            },
-            region: 'west',
-            html: '<ul><li>This area is commonly used for navigation, for example, using a "tree" component.</li></ul>',
-            width: 250,
-            split: true,
-            tbar: [{
-                text: 'Button',
-                handler: 'onClickButton'
-            }]
+            xtype: 'app-navigation',
+            region: 'west'
         }, {
             region: 'center',
             xtype: 'tabpanel',

@@ -29,7 +29,7 @@
      */
     
     "theme": "ext-theme-crisp",
-    
+
     /**
      * The list of required packages (with optional versions; default is "latest").
      *
