@@ -14,7 +14,8 @@ Ext.define('MyApp.view.main.MainModel', {
 
     stores:{
         navigationStore:{
-            type:'navigation'//导航栏treestore
+            type:'navigation',//导航栏treestore
+            storeId:'navigation'
         }
     }
 });

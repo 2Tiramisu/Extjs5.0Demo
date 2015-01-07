@@ -13,6 +13,13 @@ Ext.define('MyApp.Application', {
     ],
     
     launch: function () {
-        // TODO - Launch the application
+
+    },
+
+    init: function() {
+        var me = this;
+        //设置默认路由
+        me.setDefaultToken('all');
     }
+
 });

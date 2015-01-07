@@ -15,15 +15,59 @@ Ext.define('MyApp.view.main.MainController', {
 
     alias: 'controller.main',
 
-    onClickButton: function () {
-        Ext.Msg.confirm('Confirm', 'Are you sure?', 'onConfirm', this);
+    control: {
+        'app-navigation': {//组件别名，表示要控制的是该组件
+            selectionchange: 'onTreeNavSelectionChange'
+        }
     },
 
-    onConfirm: function (choice) {
-        if (choice === 'yes') {
-           this.getView().getViewModel().set('navigationTitle','修改了')
-        }else if (choice === 'no') {
-            this.getView().getViewModel().set('navigationTitle','导航栏')
+    routes  : {
+        ':id': {
+            action: 'handleRoute',//执行跳转
+            before: 'beforeHandleRoute'//路由跳转前操作
+        }
+    },
+
+    onTreeNavSelectionChange: function(selModel, records) {
+        var record = records[0];
+        if (record) {
+            this.redirectTo(record.getId());
+        }
+    },
+
+    beforeHandleRoute: function(id, action) {
+        var me = this,
+            node = Ext.StoreMgr.get('navigation').getNodeById(id);
+
+        if (node) {
+            //resume action
+            action.resume();
+        } else {
+            Ext.Msg.alert(
+                '路由跳转失败',
+                '找不到id为' + id + ' 的组件. 界面将跳转到应用初始界面',
+                function() {
+                    me.redirectTo('all');
+                }
+            );
+            //stop action
+            action.stop();
+        }
+    },
+
+    handleRoute: function(id) {
+        var me = this,
+            store = Ext.StoreMgr.get('navigation'),
+            node = store.getNodeById(id);
+        if(node.isLeaf()){
+            Ext.Msg.alert(
+                '提示',
+                '当前点击的是叶子节点，右侧panel将跳转到对应的组件上');
+        }else{
+            Ext.Msg.alert(
+                '提示',
+                '当前点击的是非叶子节点，右侧panel将跳转到导航界面上');
         }
     }
+
 });

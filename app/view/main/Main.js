@@ -6,9 +6,11 @@
  * TODO - Replace this content of this view to suite the needs of your application.
  */
 Ext.define('MyApp.view.main.Main', {
+
     extend: 'Ext.container.Container',
+
     requires: [
-        'MyApp.view.main.MainController',
+        'MyApp.view.main.MainController',//引入controller
         'MyApp.view.main.MainModel',
         'MyApp.view.main.Header',//引入Header
         'MyApp.view.main.Navigation'//引入导航栏
@@ -16,7 +18,8 @@ Ext.define('MyApp.view.main.Main', {
 
     xtype: 'app-main',
 
-    controller: 'main',
+    controller: 'main',//指定控制器
+
     viewModel: {
         type: 'main'
     },
@@ -36,8 +39,17 @@ Ext.define('MyApp.view.main.Main', {
             region: 'center',
             xtype: 'tabpanel',
             items: [{
-                title: 'Tab 1',
-                html: '<h2>Content appropriate for the current navigation.</h2>'
+                title: 'Home',
+                html:' KitchenSink.DummyText.longText'
+            }, {
+                title: 'Users',
+                html: 'KitchenSink.DummyText.extraLongText'
+            }, {
+                title: 'Groups',
+                html:' KitchenSink.DummyText.longText'
+            }, {
+                title: 'Settings',
+                html:' KitchenSink.DummyText.extraLongText'
             }]
         }]
 });
