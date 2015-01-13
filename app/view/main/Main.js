@@ -13,7 +13,8 @@ Ext.define('MyApp.view.main.Main', {
         'MyApp.view.main.MainController',//引入controller
         'MyApp.view.main.MainModel',
         'MyApp.view.main.Header',//引入Header
-        'MyApp.view.main.Navigation'//引入导航栏
+        'MyApp.view.main.Navigation',//引入导航栏
+        'MyApp.view.main.ContentPanel'//引入内容区域
     ],
 
     xtype: 'app-main',
@@ -37,19 +38,6 @@ Ext.define('MyApp.view.main.Main', {
             region: 'west'
         }, {
             region: 'center',
-            xtype: 'tabpanel',
-            items: [{
-                title: 'Home',
-                html:' KitchenSink.DummyText.longText'
-            }, {
-                title: 'Users',
-                html: 'KitchenSink.DummyText.extraLongText'
-            }, {
-                title: 'Groups',
-                html:' KitchenSink.DummyText.longText'
-            }, {
-                title: 'Settings',
-                html:' KitchenSink.DummyText.extraLongText'
-            }]
+            xtype: 'app-contentPanel'
         }]
 });

@@ -5,8 +5,6 @@ Ext.define('MyApp.view.main.Navigation', {
     extend: 'Ext.tree.Panel',//继承treepanel
     xtype: 'app-navigation',
     rootVisible: false,
-    lines: false,
-    stateful: true,
     useArrows: true,
     hideHeaders: true,
     width: 250,

@@ -7,7 +7,7 @@ Ext.define('MyApp.store.main.Navigation', {
     },
     root: {
         text: 'All',
-         id: 'all',
+        id: 'all',
         expanded: true
     }
 });

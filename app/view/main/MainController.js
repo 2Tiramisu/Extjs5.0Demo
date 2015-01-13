@@ -10,7 +10,8 @@ Ext.define('MyApp.view.main.MainController', {
 
     requires: [
         'Ext.window.MessageBox',
-        'MyApp.store.main.Navigation'
+        'MyApp.store.main.Navigation',
+        'MyApp.view.thumbnails.Thumbnails'
     ],
 
     alias: 'controller.main',
@@ -37,12 +38,16 @@ Ext.define('MyApp.view.main.MainController', {
 
     beforeHandleRoute: function(id, action) {
         var me = this,
-            node = Ext.StoreMgr.get('navigation').getNodeById(id);
+            store =Ext.StoreMgr.get('navigation');
+        var node = store.getNodeById(id);
 
         if (node) {
             //resume action
             action.resume();
-        } else {
+        } else if(store.getCount() === 0){
+            action.stop();
+            me.redirectTo(id);
+        }else {
             Ext.Msg.alert(
                 '路由跳转失败',
                 '找不到id为' + id + ' 的组件. 界面将跳转到应用初始界面',
@@ -57,17 +62,26 @@ Ext.define('MyApp.view.main.MainController', {
 
     handleRoute: function(id) {
         var me = this,
-            store = Ext.StoreMgr.get('navigation'),
-            node = store.getNodeById(id);
+            mainView = me.getView(),
+            navigationTree = mainView.down('app-navigation'),
+            store =Ext.StoreMgr.get('navigation'),
+            node = store.getNodeById(id),
+            contentPanel = mainView.down('app-contentPanel'),
+            thumbnails = mainView.down('thumbnails');
         if(node.isLeaf()){
-            Ext.Msg.alert(
-                '提示',
-                '当前点击的是叶子节点，右侧panel将跳转到对应的组件上');
+            if (thumbnails) {
+                contentPanel.remove(thumbnails, false); // remove thumbnail view without destroying
+            } else {
+                contentPanel.removeAll(true);
+            }
         }else{
-            Ext.Msg.alert(
-                '提示',
-                '当前点击的是非叶子节点，右侧panel将跳转到导航界面上');
+
+            if(!thumbnails){
+                contentPanel.removeAll(true);
+            };
+            contentPanel.add({xtype:'thumbnails'});
         }
+
     }
 
 });
