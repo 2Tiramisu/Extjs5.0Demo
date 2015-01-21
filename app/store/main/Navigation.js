@@ -1,6 +1,7 @@
 Ext.define('MyApp.store.main.Navigation', {
     extend: 'Ext.data.TreeStore',
     alias: 'store.navigation',
+    storeId:'navigation',
     proxy: {
         type: 'ajax',
         url: 'resources/data/Navigation.json'

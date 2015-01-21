@@ -8,12 +8,6 @@
 Ext.define('MyApp.view.main.MainController', {
     extend: 'Ext.app.ViewController',
 
-    requires: [
-        'Ext.window.MessageBox',
-        'MyApp.store.main.Navigation',
-        'MyApp.view.thumbnails.Thumbnails'
-    ],
-
     alias: 'controller.main',
 
     control: {
@@ -22,66 +16,67 @@ Ext.define('MyApp.view.main.MainController', {
         }
     },
 
-    routes  : {
+    routes: {
         ':id': {
             action: 'handleRoute',//执行跳转
             before: 'beforeHandleRoute'//路由跳转前操作
         }
     },
 
-    onTreeNavSelectionChange: function(selModel, records) {
+    onTreeNavSelectionChange: function (selModel, records) {
         var record = records[0];
         if (record) {
             this.redirectTo(record.getId());
         }
     },
 
-    beforeHandleRoute: function(id, action) {
+    beforeHandleRoute: function (id, action) {
         var me = this,
-            store =Ext.StoreMgr.get('navigation');
-        var node = store.getNodeById(id);
+            mainView = me.getView(),
+            navigationTree = mainView.down('app-navigation'),
+            store = navigationTree.getStore(),
+            node = store.getNodeById(id);
 
         if (node) {
-            //resume action
             action.resume();
-        } else if(store.getCount() === 0){
-            action.stop();
-            me.redirectTo(id);
-        }else {
-            Ext.Msg.alert(
-                '路由跳转失败',
-                '找不到id为' + id + ' 的组件. 界面将跳转到应用初始界面',
-                function() {
-                    me.redirectTo('all');
+        }else if(store.getCount() === 0){
+            //在store load事件中判断节点，避免store数据未加载情况
+            store.on('load', function () {
+                node = store.getNodeById(id);
+                if (node) {
+                    action.resume();
+                }else {
+                    Ext.Msg.alert('路由跳转失败', '找不到id为' + id + ' 的组件');
+                    action.stop();
                 }
-            );
-            //stop action
+            });
+        }else {
+            Ext.Msg.alert('路由跳转失败', '找不到id为' + id + ' 的组件');
             action.stop();
         }
     },
 
-    handleRoute: function(id) {
+    handleRoute: function (id) {
         var me = this,
             mainView = me.getView(),
             navigationTree = mainView.down('app-navigation'),
-            store =Ext.StoreMgr.get('navigation'),
-            node = store.getNodeById(id),
             contentPanel = mainView.down('app-contentPanel'),
-            thumbnails = mainView.down('thumbnails');
-        if(node.isLeaf()){
-            if (thumbnails) {
-                contentPanel.remove(thumbnails, false); // remove thumbnail view without destroying
-            } else {
-                contentPanel.removeAll(true);
-            }
-        }else{
+            store = navigationTree.getStore(),
+            node = store.getNodeById(id),
+            className,cmp,ViewClass;
 
-            if(!thumbnails){
-                contentPanel.removeAll(true);
-            };
-            contentPanel.add({xtype:'thumbnails'});
+        //响应路由，左侧树定位到相应节点
+        navigationTree.getSelectionModel().select(node);
+        navigationTree.getView().focusNode(node);
+
+        //响应路由，改变右侧panel内容
+        if (node.isLeaf()) {
+            contentPanel.removeAll(true);
+            className = Ext.ClassManager.getNameByAlias('widget.' + id);
+            ViewClass = Ext.ClassManager.get(className);
+            cmp = new ViewClass();
+            contentPanel.add(cmp);
         }
-
     }
 
 });

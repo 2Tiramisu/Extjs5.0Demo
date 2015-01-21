@@ -8,8 +8,10 @@ Ext.define('MyApp.Application', {
     
     name: 'MyApp',
 
+    requires:['MyApp.view.*'],//引入view目录下的所有文件
+
     stores: [
-        // TODO: add global / shared stores here
+       'main.Navigation'
     ],
     
     launch: function () {

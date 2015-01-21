@@ -16,8 +16,9 @@ Ext.define('MyApp.view.main.Navigation', {
         flex: 1,
         dataIndex: 'text'
     }],
+    store:'main.Navigation',
     bind: {
-        store: '{navigationStore}',//绑定store
+        //store: '{navigationStore}',//绑定store
         title: '{navigationTitle}'
     }
 });

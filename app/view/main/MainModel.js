@@ -10,12 +10,12 @@ Ext.define('MyApp.view.main.MainModel', {
 
     data: {
         navigationTitle: '导航栏'//导航栏标题
-    },
+    }
 
-    stores:{
+   /* stores:{
         navigationStore:{
             type:'navigation',//导航栏treestore
             storeId:'navigation'
         }
-    }
+    }*/
 });
