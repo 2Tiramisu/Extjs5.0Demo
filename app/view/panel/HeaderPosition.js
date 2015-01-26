@@ -30,10 +30,7 @@ Ext.define('MyApp.view.panel.HeaderPosition', {
             defaultUI: 'default',
             items: [{
                 text: 'Top',
-                value: 'top',
-                handler:function(){
-                    console.log(getPositionBtn());
-                }
+                value: 'top'
             }, {
                 text: 'Right',
                 value: 'right'
