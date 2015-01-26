@@ -9,16 +9,15 @@
 Ext.define('MyApp.view.panel.HeaderPosition', {
     extend: 'Ext.panel.Panel',
     xtype: 'panel-header-position',
-    viewModel: true,
     width: 600,
     layout: 'column',
     defaults: {
         bodyPadding: 10,
         height: 300,
-        autoScroll: true,
-        columnWidth: 0.5
+        autoScroll: true
     },
     bodyStyle: 'background: transparent',
+
     tbar: [
         {
             xtype: 'label',
@@ -31,7 +30,10 @@ Ext.define('MyApp.view.panel.HeaderPosition', {
             defaultUI: 'default',
             items: [{
                 text: 'Top',
-                value: 'top'
+                value: 'top',
+                handler:function(){
+                    console.log(getPositionBtn());
+                }
             }, {
                 text: 'Right',
                 value: 'right'
@@ -46,14 +48,21 @@ Ext.define('MyApp.view.panel.HeaderPosition', {
     ],
 
     items: [{
-        xtype: 'textfield',
-        value:'hello',
-        reference: 'isAdmin'
-    },{
-        xtype: 'textfield',
-        fieldLabel: 'Admin Key',
+        columnWidth: 0.5,
+        margin:'10 5 0 0',
+        title: 'Panel',
+        html: '我是正常的',
         bind: {
-            value: '{value.value}'
+            headerPosition: '{positionBtn.value}'
+        }
+    }, {
+        columnWidth: 0.5,
+        frame: true,
+        margin:'10 0 0 5',
+        title: 'Framed Panel',
+        html:' 我是frame的，注意我有圆角',
+        bind: {
+            headerPosition: '{positionBtn.value}'
         }
     }]
 
