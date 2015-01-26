@@ -70,13 +70,18 @@ Ext.define('MyApp.view.main.MainController', {
         navigationTree.getView().focusNode(node);
 
         //响应路由，改变右侧panel内容
+        contentPanel.removeAll(true);
         if (node.isLeaf()) {
-            contentPanel.removeAll(true);
             className = Ext.ClassManager.getNameByAlias('widget.' + id);
+            console.log(className);
             ViewClass = Ext.ClassManager.get(className);
             cmp = new ViewClass();
             contentPanel.add(cmp);
         }
+        var text = node.get('text'),
+            title = node.isLeaf() ? (node.parentNode.get('text') + ' - ' + text) : text;
+        contentPanel.setTitle(title);
+        document.title = document.title.split(' - ')[0] + ' - ' + text;
     }
 
 });
