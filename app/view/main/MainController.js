@@ -73,7 +73,6 @@ Ext.define('MyApp.view.main.MainController', {
         contentPanel.removeAll(true);
         if (node.isLeaf()) {
             className = Ext.ClassManager.getNameByAlias('widget.' + id);
-            console.log(className);
             ViewClass = Ext.ClassManager.get(className);
             cmp = new ViewClass();
             contentPanel.add(cmp);

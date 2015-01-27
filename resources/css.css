@@ -14,5 +14,5 @@
     background:url(images/logo.png) no-repeat center 4px
 }
 .app-contentPanel-body{
-    background-image: url(images/square.gif);
+    background-image: url(images/square.gif)!important;
 }
